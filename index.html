@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Track Pacing Calculator</title>
+</head>
+
+<style>
+    body {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+
+        /* background-image: url(../images/track.jpg); */
+
+    }
+
+    .calculate {
+        width: 6.5em;
+        height: 2.3em;
+        margin: 0.5em;
+        background: black;
+        color: white;
+        border: none;
+        border-radius: 0.625em;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    input {
+        /* height: 48px; */
+
+        border: 1px solid #c0c0c0;
+        border-radius: 4px;
+        box-sizing: border-box;
+        padding: 16px;
+        transition: all 0.3s ease;
+
+    }
+
+    .target-time-input {
+        width: 100px;
+    }
+
+    input:focus {
+
+        outline: none;
+        border: 2px solid #4f94ff;
+        /* bright blue border */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.206);
+        transform: scale(1.02);
+        /* subtle zoom effect */
+    }
+
+    input,
+    .label .text {
+        font-size: 16px;
+    }
+
+    .main-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* align items at the top */
+        align-items: center;
+        background-color: white;
+        max-width: 6in;
+        /* start at original size */
+        border-radius: 24px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        padding: 10px;
+        /* add spacing inside the card */
+        box-sizing: border-box;
+    }
+
+    .event-selector {
+        height: 48px;
+        width: 280px;
+        border: 1px solid #c0c0c0;
+        border-radius: 4px;
+        padding: 0 16px;
+        font-size: 16px;
+        box-sizing: border-box;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+    }
+
+    .event-selector:focus {
+        outline: none;
+        border: 2px solid #4f94ff;
+        /* same as input focus */
+        box-shadow: 0 0 10px rgba(79, 148, 255, 0.5);
+    }
+
+
+    #goal_input {
+        display: flex;
+        gap: 20px;
+    }
+
+    .target-time-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .target-time-input label {
+        display: flex;
+        justify-content: center;
+        font-weight: normal;
+        color: rgb(48, 48, 48);
+    }
+
+
+    label {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .event-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .event-buttons input {
+        display: none;
+    }
+
+    .event-buttons label {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+
+    .event-buttons input:checked+span {
+
+        transition: all 0.3s ease;
+        color: red;
+    }
+
+
+
+    .event-buttons label:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.219);
+        transition: all 0.3s ease;
+    }
+
+
+    /* ===== Table Styling ===== */
+
+    #result {
+        margin-top: 1.5rem;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        /* rounds corners */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        font-size: 15px;
+    }
+
+    /* Header */
+    #result thead {
+        background-color: #111;
+        color: white;
+    }
+
+    #result th {
+        padding: 12px 14px;
+        text-align: left;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+    }
+
+    /* Body rows */
+    #result tbody tr {
+        border-bottom: 1px solid #e6e6e6;
+        transition: background-color 0.2s ease;
+    }
+
+    #result tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    #result td {
+        padding: 12px 14px;
+    }
+
+
+    /* Hover effect */
+    #result tbody tr:hover {
+        background-color: #eef4ff;
+    }
+
+    /* Numeric alignment tweaks */
+    #result td:nth-child(1),
+    #result td:nth-child(2) {
+        font-weight: 600;
+    }
+
+    #result td:nth-child(4) {
+        font-family: monospace;
+        font-weight: 600;
+    }
+
+
+
+    #target-time-heading i {
+        margin-right: 0.5rem;
+        /* space between icon and text */
+        color: #111;
+        /* optional: match header color */
+        font-size: 1.2em;
+        /* adjust icon size */
+        vertical-align: bottom;
+        /* align with text baseline */
+    }
+
+    #distance-heading i {
+        margin-right: 10px;
+        /* space between icon and text */
+        color: #111;
+        /* optional: match header color */
+        font-size: 1.2em;
+        /* adjust icon size */
+        vertical-align: bottom;
+        /* align with text baseline */
+    }
+
+
+    h5 {
+        font-weight: normal;
+    }
+
+    .custom-distance-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+
+    #custom-distance {
+        width: 100%;
+    }
+
+    .settings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+
+<script>
+
+    let hasUserInput = false;
+
+    const events = {
+        "800m": 800,
+        "1500m": 1500,
+        "Mile": 1609.34,
+        "3,000m": 3000,
+        "5,000m": 5000,
+        "10,000m": 10000
+    };
+
+    // Set default lap length to outdoor track (400m)
+    let lap_length = 400;
+
+    function changeLapLength() {
+        const selected = document.querySelector('input[name="track-length"]:checked');
+
+        if (!selected) return;
+
+        lap_length = parseInt(selected.value);
+        calculateSplits();
+    }
+
+    function onFirstInput() {
+        hasUserInput = true;
+        calculateSplits();
+    }
+
+    // Loads the radio buttons 
+    function loadContent() {
+        let event_buttons = "";
+
+        Object.entries(events).forEach(([event, distance]) => {
+            event_buttons += `
+               <label>
+                <input type="radio" name="event" class="event-button" value="${distance}">
+                <span>${event}</span>
+            </label>
+        `;
+        });
+
+        document.getElementById("event-buttons").innerHTML = event_buttons;
+
+    }
+
+
+
+    // Convert elapsed time in seconds to "minutes:seconds" format
+    function formatter(elapsed_time) {
+        let minutes = Math.floor(elapsed_time / 60);
+        let seconds = elapsed_time % 60;
+        return `${minutes}:${seconds.toFixed(2).padStart(5, '0')}`;
+    }
+
+
+
+    function calculateSplits() {
+        // Check to see if there is user input 
+        if (!hasUserInput) return;
+
+        const goal_hours = document.getElementById("goal_hours").value;
+        const goal_minutes = document.getElementById("goal_minutes").value;
+        const goal_seconds = document.getElementById("goal_seconds").value;
+        // const lap_length = document.getElementById("lap_length").value;
+
+        const hours = parseInt(goal_hours) || 0;
+        const minutes = parseInt(goal_minutes) || 0;
+        const seconds = parseFloat(goal_seconds) || 0;
+
+        // Get custom distance (if provided)
+        const customDistanceInput = document.getElementById("custom-distance").value;
+        const customDistance = parseFloat(customDistanceInput);
+
+        // Get selected preset event
+        const selectedEvent = document.querySelector('input[name="event"]:checked');
+
+        let event;
+
+        // Priority: custom distance
+        if (!isNaN(customDistance) && customDistance > 0) {
+            event = customDistance;
+        }
+        // Fallback: radio button
+        else if (selectedEvent) {
+            event = parseFloat(selectedEvent.value);
+        }
+
+        const total_seconds = (hours * 3600) + (minutes * 60) + seconds;
+
+        // Prevent division by zero
+        if (total_seconds === 0) return;
+
+        const seconds_per_meter = total_seconds / event;
+
+
+        const goal_time =
+            hours > 0
+                ? `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+                : `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+        let meters_run = 0;
+        let elapsed_time = 0;
+
+        let result_table = `            
+        <thead>
+                <tr>
+                    <th>Lap</th>
+                    <th>Distance</th>
+                    <th>Split</th>
+                    <th>Cumulative</th>
+                </tr>
+            </thead>`;
+
+        let lap = 0;
+
+        // Loop until we reach the total distance
+        while (meters_run < event - 0.1) {
+            lap++;
+
+            let lap_distance;
+
+            // === LOGIC FLIP ===
+            if (lap === 1) {
+                // Calculate the "start offset" (the remainder)
+                const remainder = event % lap_length;
+
+
+                lap_distance = remainder > 0.1 ? remainder : lap_length;
+            } else {
+                // All subsequent laps are standard 400m chunks
+                lap_distance = Math.min(lap_length, event - meters_run);
+            }
+
+            elapsed_time += lap_distance * seconds_per_meter;
+            meters_run += lap_distance;
+
+            result_table += `
+                <tr>
+                    <td>${lap}</td>
+                    <td>${Math.round(meters_run)}m</td>
+                    <td>${(lap_distance * seconds_per_meter).toFixed(2)}s (${Math.round(lap_distance)}m)</td>
+                    <td>${formatter(elapsed_time)}</td>
+                </tr>
+            `;
+        }
+
+        document.getElementById("result").innerHTML = result_table;
+
+
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+
+        // Load buttons only (safe to do immediately)
+        loadContent();
+        // Grab elements AFTER loadContent() runs
+
+        const trackLengthRadios = document.querySelectorAll('input[name="track-length"]');
+
+        trackLengthRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                changeLapLength();
+            });
+        });
+
+        const customInput = document.getElementById('custom-distance');
+        const radioButtons = document.querySelectorAll('input[name="event"]');
+        const allInputs = document.querySelectorAll('#goal_input input, #custom-distance, input[name="event"]');
+
+        const inputs = document.querySelectorAll(
+            '#goal_input input, #custom-distance, input[name="event"]'
+        );
+
+        // 1. When typing in Custom Distance -> Uncheck all radio buttons
+        customInput.addEventListener('input', () => {
+            radioButtons.forEach(btn => {
+                btn.checked = false; // This removes the red highlight
+            });
+        });
+
+        // 2. When clicking a Radio Button -> Clear Custom Distance
+        radioButtons.forEach(btn => {
+            btn.addEventListener('change', () => {
+                customInput.value = ''; // Clear the text box
+                calculateSplits();      // Recalculate immediately
+            });
+        });
+
+        inputs.forEach(input => {
+
+            // First interaction
+            input.addEventListener('input', () => {
+                if (!hasUserInput) {
+                    onFirstInput();
+                } else {
+                    calculateSplits();
+                }
+            });
+
+            // Radio buttons use change instead of input
+            input.addEventListener('change', () => {
+                if (!hasUserInput) {
+                    onFirstInput();
+                } else {
+                    calculateSplits();
+                }
+            });
+        });
+    });
+
+
+</script>
+
+
+
+<body>
+
+    <h1>Track Pacing Calculator</h1>
+
+    <div class="main-card">
+        <!-- <button class="settings">Settings</button> -->
+
+        <h3 id="target-time-heading">
+            <i class="fa-solid fa-stopwatch"></i>
+            Target Time:
+        </h3>
+        <div id="goal_input">
+
+            <div class="target-time-input">
+                <input id="goal_hours" type="number" min="0">
+                <label for="goal_hours">Hours</label>
+            </div>
+
+            <div class="target-time-input">
+                <input id="goal_minutes" type="number" min="0" max="59">
+                <label for="goal_minutes">Minutes</label>
+            </div>
+            <div class="target-time-input">
+                <input id="goal_seconds" type="number" min="0" max="59.99">
+                <label for="goal_seconds">Seconds</label>
+            </div>
+        </div>
+
+
+
+
+        <h3 id="distance-heading">
+            <i class="fa-solid fa-ruler"></i>
+            Race Distance:
+        </h3>
+
+
+        <div id="event-buttons" class="event-buttons">
+
+        </div>
+
+
+        <div class="custom-distance-div">
+            <h5>Custom Distance (meters):</h5>
+            <input id="custom-distance" type="number" min="1" step="1" placeholder="e.g. 1200">
+        </div>
+
+
+
+        <div class="settings">
+            <p>Track Length: </p>
+            <div>
+                <label><input type="radio" name="track-length" value="200"> 200m</label>
+                <label><input type="radio" name="track-length" value="400" checked> 400m</label>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <table id="result">
+
+
+    </table>
+
+
+
+
+
+</body>
+
+</html>
