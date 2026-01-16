@@ -13,22 +13,22 @@
     --color-border: #e0e0e0;
     --color-border-focus: #c0c0c0;
     --color-shadow: rgba(0, 0, 0, 0.25);
-    --color-shadow-light: rgba(0, 0, 0, 0.15);
+    --color-shadow-light: rgba(0, 0, 0, 0.10);
     --color-hover-row: #eef4ff;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.625rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
-    
+
     /* Border Radius */
     --radius-sm: 4px;
     --radius-md: 10px;
     --radius-lg: 12px;
     --radius-xl: 24px;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -95,7 +95,7 @@ h5 {
     background-color: var(--color-bg-card);
     max-width: 6in;
     border-radius: var(--radius-xl);
-    box-shadow: 0 0 10px var(--color-shadow);
+    box-shadow: var(--color-shadow-light);
     padding: var(--spacing-md);
     width: 100%;
 }
@@ -117,7 +117,7 @@ input[type="number"]:hover {
 input[type="number"]:focus {
     outline: none;
     background-color: var(--color-bg-input-hover);
-    transform: scale(1.02);
+    border: 3px solid black;
 }
 
 /* Target Time Input Section */
@@ -221,7 +221,7 @@ input[type="number"]:focus {
     margin-bottom: var(--spacing-sm);
 }
 
-.settings > div {
+.settings>div {
     display: flex;
     gap: var(--spacing-sm);
     width: 100%;
@@ -258,16 +258,17 @@ input[type="number"]:focus {
     margin-top: var(--spacing-lg);
     border-collapse: collapse;
     width: 100%;
-    max-width: 600px;
+    max-width: 6in;
     background-color: var(--color-bg-card);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: 0 8px 20px var(--color-shadow-light);
     font-size: 15px;
+    
 }
 
 #result thead {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-active);
     color: var(--color-text-inverse);
 }
 
@@ -281,6 +282,7 @@ input[type="number"]:focus {
 #result tbody tr {
     border-bottom: 1px solid var(--color-border);
     transition: background-color var(--transition-fast);
+    font-family: monospace;
 }
 
 #result tbody tr:last-child {
@@ -305,18 +307,29 @@ input[type="number"]:focus {
     font-weight: 600;
 }
 
+#scroll-to-see {
+    margin-top: 10px;
+    opacity: 0;
+    color: rgb(157, 157, 157)
+}
+
+
+
 
 /* Responsive Design */
-@media (max-width: 480px) {
+@media (max-width: 700px) {
     body {
         width: 100%;
         padding: 0;
     }
     
+
     .main-card {
         border-radius: 0;
-        min-height: 100vh;
+        /* min-height: 100vh; */
         padding: 20px;
+        opacity: 1;
+        background-color: #ffffff00;
     }
 
     .event-buttons {
@@ -326,8 +339,23 @@ input[type="number"]:focus {
     h1 {
         font-size: 28px;
     }
-    
+
     #goal_input {
         gap: 10px;
     }
+
+
+    #scroll-to-see {
+        opacity: 1;
+    }
+}
+
+
+footer {
+    position: absolute;
+    bottom: 10px;
+    padding: 20px;
+    color: #898989;
+    z-index: -1;
+
 }
