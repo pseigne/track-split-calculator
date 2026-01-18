@@ -1,25 +1,14 @@
 :root {
-    /* Color Palette */
-    --color-primary: #111111;
-    --color-primary-hover: #2a2a2a;
-    --color-primary-active: #3a3a3a;
-    --color-bg-page: #f5f5f5;
-    --color-bg-card: #ffffff;
-    --color-bg-input: #eeeeee;
-    --color-bg-input-hover: #dedede;
-    --color-text: #000000;
-    --color-text-secondary: #303030;
-    --color-text-inverse: #ffffff;
-    --color-border: #e0e0e0;
-    --color-border-focus: #c0c0c0;
-    --color-shadow: rgba(0, 0, 0, 0.25);
-    --color-shadow-light: rgba(0, 0, 0, 0.10);
-    --color-hover-row: #eef4ff;
+    --color-primary: hsl(360, 50%, 90%);
+    --color-card: hsl(360, 50%, 95%);
+    --color-secondary: hsl(360, 50%, 10%);
+    --color-tertiary: hsl(360, 50%, 90%);
+    --color-accent: hsl(300, 80%, 20%);
 
-    /* Level 2 Shadows */
-    --shadow-s: inset 0 1px 2px #ffffff30, 0 1px 2px #00000030, 0 2px 4px #00000015;
-    --shadow-m: inset 0 1px 2px #ffffff50, 0 2px 4px #00000030, 0 4px 8px #00000015;
-    --shadow-l: inset 0 1px 2px #ffffff70, 0 4px 6px #00000030, 0 6px 10px #00000015;
+    /* Shadows */
+    --shadow-s: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-m: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-l: 0 10px 15px rgba(0, 0, 0, 0.1);
 
     /* Spacing */
     --spacing-xs: 0.5rem;
@@ -39,26 +28,12 @@
     --transition-normal: 0.3s ease;
 }
 
-/* Dark mode variables (uncomment to enable) */
-/*
-:root.dark-mode {
-    --color-primary: #ffffff;
-    --color-primary-hover: #e0e0e0;
-    --color-primary-active: #c0c0c0;
-    --color-bg-page: #1a1a1a;
-    --color-bg-card: #2a2a2a;
-    --color-bg-input: #3a3a3a;
-    --color-bg-input-hover: #4a4a4a;
-    --color-text: #ffffff;
-    --color-text-secondary: #cccccc;
-    --color-text-inverse: #000000;
-    --color-border: #444444;
-    --color-border-focus: #666666;
-    --color-shadow: rgba(0, 0, 0, 0.5);
-    --color-shadow-light: rgba(0, 0, 0, 0.3);
-    --color-hover-row: #333333;
+.dark {
+    --color-primary: hsl(360, 50%, 10%);
+    --color-secondary: hsl(360, 50%, 90%);
+    --color-tertiary: hsl(60, 80%, 80%);
+    --color-accent: hsl(300, 80%, 80%);
 }
-*/
 
 * {
     box-sizing: border-box;
@@ -66,8 +41,8 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--color-bg-page);
-    color: var(--color-text);
+    background: var(--color-primary);
+    color: var(--color-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,6 +56,7 @@ body {
 h1 {
     font-size: 32px;
     margin: var(--spacing-lg) 0;
+    font-weight: 1000;
 }
 
 h3 {
@@ -97,7 +73,7 @@ h5 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--color-bg-card);
+    background-color: var(--color-card);
     max-width: 6in;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-m);
@@ -108,7 +84,7 @@ h5 {
 /* Input Styles */
 input[type="number"] {
     border: 0;
-    background-color: var(--color-bg-input);
+    background-color: var(--color-primary);
     border-radius: var(--radius-md);
     padding: 16px;
     font-size: 16px;
@@ -122,8 +98,8 @@ input[type="number"]:hover {
 
 input[type="number"]:focus {
     outline: none;
-    background-color: var(--color-bg-input-hover);
-    border: 3px solid black;
+    background-color: var(--color-tertiary);
+    border: 3px solid var(--color-secondary);
 }
 
 /* Target Time Input Section */
@@ -146,14 +122,14 @@ input[type="number"]:focus {
 .target-time-input label {
     margin-top: var(--spacing-sm);
     font-weight: normal;
-    color: var(--color-text-secondary);
+    color: var(--color-secondary);
 }
 
 /* Icon Headings */
 #target-time-heading i,
 #distance-heading i {
     margin-right: var(--spacing-xs);
-    color: var(--color-primary);
+    color: var(--color-accent);
     font-size: 1.2em;
     vertical-align: bottom;
 }
@@ -177,8 +153,8 @@ input[type="number"]:focus {
     border: none;
     border-radius: var(--radius-lg);
     cursor: pointer;
-    background-color: var(--color-bg-input);
-    color: var(--color-text);
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
     transition: all var(--transition-fast);
     text-align: center;
     font-size: 14px;
@@ -186,17 +162,17 @@ input[type="number"]:focus {
 }
 
 .event-buttons label:hover {
-    background-color: var(--color-primary-active);
-    color: var(--color-text-inverse);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
 }
 
 .event-buttons label:has(input:checked) {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
 }
 
 .event-buttons label:has(input:checked):hover {
-    background-color: var(--color-primary);
+    box-shadow: var(--shadow-m);
 }
 
 /* Custom Distance */
@@ -223,7 +199,7 @@ input[type="number"]:focus {
 }
 
 .settings p {
-    color: var(--color-text);
+    color: var(--color-secondary);
     font-size: 13px;
     margin-bottom: var(--spacing-sm);
 }
@@ -236,20 +212,20 @@ input[type="number"]:focus {
 
 .settings label {
     flex: 1;
-    background-color: var(--color-bg-input);
+    background-color: var(--color-primary);
     padding: 12px;
     border-radius: var(--radius-lg);
     cursor: pointer;
     text-align: center;
     transition: all var(--transition-fast);
-    color: var(--color-text);
+    color: var(--color-secondary);
     font-size: 14px;
     box-shadow: var(--shadow-s);
 }
 
 .settings label:hover {
-    background-color: var(--color-primary-active);
-    color: var(--color-text-inverse)
+    background-color: var(--color-accent);
+    color: var(--color-primary)
 }
 
 .settings input[type="radio"] {
@@ -257,8 +233,41 @@ input[type="number"]:focus {
 }
 
 .settings label:has(input:checked) {
-    background-color: var(--color-primary-active);
-    color: var(--color-text-inverse);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
+
+/* Custom Track Length Input */
+.custom-track-div {
+    display: flex;
+    justify-content: center;
+    
+    width: 100%;
+    margin-top: var(--spacing-md);
+}
+
+#custom-track-input {
+    width: 100%;
+    max-width: 200px;
+    background-color: var(--color-primary);
+    border: 0;
+    border-radius: var(--radius-md);
+    padding: 12px;
+    font-size: 14px;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-s);
+    color: var(--color-secondary);
+    margin: 10px;
+}
+
+#custom-track-input:hover {
+    box-shadow: var(--shadow-m);
+}
+
+#custom-track-input:focus {
+    outline: none;
+    background-color: var(--color-tertiary);
+    border: 3px solid var(--color-secondary);
 }
 
 /* Results Table */
@@ -267,7 +276,7 @@ input[type="number"]:focus {
     border-collapse: collapse;
     width: 100%;
     max-width: 6in;
-    background-color: var(--color-bg-card);
+    background-color: var(--color-secondary);
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-m);
@@ -276,8 +285,8 @@ input[type="number"]:focus {
 }
 
 #result thead {
-    background-color: var(--color-primary-active);
-    color: var(--color-text-inverse);
+    background-color: var(--color-accent);
+    color: var(--color-primary);
 }
 
 #result th {
@@ -288,7 +297,8 @@ input[type="number"]:focus {
 }
 
 #result tbody tr {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-tertiary);
+    background-color: var(--color-card);
     transition: background-color var(--transition-fast);
     font-family: monospace;
 }
@@ -298,7 +308,7 @@ input[type="number"]:focus {
 }
 
 #result tbody tr:hover {
-    background-color: var(--color-hover-row);
+    background-color: var(--color-primary);
 }
 
 #result td {
@@ -318,7 +328,7 @@ input[type="number"]:focus {
 #scroll-to-see {
     margin-top: 10px;
     opacity: 0;
-    color: rgb(157, 157, 157)
+    color: rgba(0, 0, 0, 0.5)
 }
 
 
@@ -365,16 +375,16 @@ footer {
     left: 0;
     right: 0;
     padding: 16px 20px;
-    color: #898989;
-    background: var(--color-bg-page);
+    color: rgba(0, 0, 0, 0.5);
+    background: var(--color-primary);
     text-align: center;
     font-size: 13px;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-tertiary);
     z-index: 10;
 }
 
 footer a {
-    color: var(--color-text);
+    color: var(--color-secondary);
     background: none;
     padding: 0;
     border-radius: 0;
@@ -382,10 +392,10 @@ footer a {
 }
 
 footer a:hover {
-    color: var(--color-primary);
+    color: var(--color-accent);
 }
 
-/* Add padding to body to account for fixed footer */
+
 body {
     padding-bottom: 100px;
 }
