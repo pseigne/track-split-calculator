@@ -58,9 +58,9 @@
         </div>
 
 
-        <div class="custom-distance-div">
-            <h5>Custom Distance (meters):</h5>
-            <input id="custom-distance" type="number" min="1" step="1" placeholder="e.g. 1200">
+        <div id="custom-distance-div">
+            <!-- <h5>Custom Distance (meters):</h5>
+            <input id="custom-distance" type="number" min="1" step="1" placeholder="e.g. 1200"> -->
         </div>
 
 
@@ -71,8 +71,10 @@
                 <!-- <label><input type="radio" name="track-length" value="100"> 100m</label> -->
                 <label><input type="radio" name="track-length" value="200"> 200m</label>
                 <label><input type="radio" name="track-length" value="400" checked> 400m</label>
-                <input type="radio" name="track-length" id="radio-custom" value="custom">
-                <label for="radio-custom">Other</label>
+                <label for="radio-custom">
+                    <input type="radio" name="track-length" id="radio-custom" value="custom">
+                    Other
+                </label>
             </div>
             <div id="custom-track-div"></div>
         </div>

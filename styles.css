@@ -176,12 +176,12 @@ input[type="number"]:focus {
 }
 
 /* Custom Distance */
-.custom-distance-div {
+#custom-distance-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: var(--spacing-lg);
+ 
 }
 
 #custom-distance {
@@ -238,7 +238,7 @@ input[type="number"]:focus {
 }
 
 /* Custom Track Length Input */
-.custom-track-div {
+#custom-track-div {
     display: flex;
     justify-content: center;
     
@@ -339,6 +339,7 @@ input[type="number"]:focus {
     body {
         width: 100%;
         padding: 0;
+        background-color: var(--color-card);
     }
     
 
@@ -356,6 +357,7 @@ input[type="number"]:focus {
 
     h1 {
         font-size: 28px;
+        margin: var(--spacing-xs);
     }
 
     #goal_input {
