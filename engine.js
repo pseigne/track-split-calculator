@@ -181,7 +181,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-const eventRadios = document.querySelectorAll('input[name="event"]');
+    const eventRadios = document.querySelectorAll('input[name="event"]');
     eventRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
             const container = document.getElementById("custom-distance-div");
@@ -193,7 +193,7 @@ const eventRadios = document.querySelectorAll('input[name="event"]');
             }
         });
     });
-    
+
     const goalInputs = document.querySelectorAll('#goal_input input');
 
     // Helper to handle any input change
